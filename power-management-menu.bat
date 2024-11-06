@@ -1,35 +1,44 @@
 @echo off
 
-@REM UTF-8
+:: Encoding UTF-8
 chcp 65001 >nul
+
+set versionApp=0.2
 
 title Power Management Menu
 
-:menu
-@REM cls
-echo ============================================
-echo   Power Management Menu
-echo ============================================
 echo.
-echo 1. Power Options
-echo 2. Advanced Settings
-echo 3. Exit
+echo                        ============================================
+echo                                    Power Management Menu
+echo                        ============================================
+echo                                         Version %versionApp%
 echo.
-set /p choix="Enter your choice (1, 2 or 3) : "
-cls
+echo        [1] Power Options
+echo        [2] Advanced Settings
+echo        [3] Exit
+echo.
+echo ------------------------------------------
+echo.
+
+:loop
+set /p choix="Please, enter your choice : "
+:: Get currrent time
+set currentTime=%time:~0,5%
+echo ------------------------------------------
+
 
 if "%choix%"=="1" (
     echo.
-    echo Opening Power Options...
+    powershell -command "Write-Host '[%currentTime%] Opening Power Options...' -ForegroundColor Green"
     echo.
     control.exe /name Microsoft.PowerOptions
-    goto menu
+    goto loop
 ) else if "%choix%"=="2" (
     echo.
-    echo Opening Advanced Settings...
+    powershell -command "Write-Host '[%currentTime%] Opening Advanced Settings...' -ForegroundColor Green"
     echo.
     control.exe powercfg.cpl,,1
-    goto menu
+    goto loop
 ) else if "%choix%"=="3" (
     cls
     echo.
@@ -38,11 +47,7 @@ if "%choix%"=="1" (
     timeout /t 2 >nul
     exit
 ) else (
-    color 4
-    echo Invalid Choice. Enter : [1, 2 or 3]
+    powershell -command "Write-Host '[%currentTime%] Invalid Choice. Enter : [1, 2 or 3]' -ForegroundColor Red"
     echo.
-    timeout /t 2 >nul
-    color 07
-    cls
-    goto menu
+    goto loop
 )
