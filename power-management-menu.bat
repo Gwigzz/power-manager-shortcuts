@@ -8,10 +8,10 @@ set versionApp=0.2
 title Power Management Menu
 
 echo.
-echo                        ============================================
-echo                                    Power Management Menu
-echo                        ============================================
-echo                                         Version %versionApp%
+echo                                    ============================================
+echo                                                Power Management Menu
+echo                                    ============================================
+echo                                                     Version %versionApp%
 echo.
 echo        [1] Power Options
 echo        [2] Advanced Settings
@@ -21,7 +21,7 @@ echo ------------------------------------------
 echo.
 
 :loop
-set /p choix="Please, enter your choice : "
+set /p choix="Choice : "
 :: Get currrent time
 set currentTime=%time:~0,5%
 echo ------------------------------------------
