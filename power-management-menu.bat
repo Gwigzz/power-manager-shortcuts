@@ -40,7 +40,6 @@ if "%choix%"=="1" (
     control.exe powercfg.cpl,,1
     goto loop
 ) else if "%choix%"=="3" (
-    cls
     echo.
     echo Exit...
     echo.
