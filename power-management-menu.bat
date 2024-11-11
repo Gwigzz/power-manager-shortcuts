@@ -16,7 +16,7 @@ set "URL_DEPOT=https://github.com/Gwigzz/power-manager-shortcuts/blob/main/power
 
 set "DEPOT_VERSION="
 
-call :msg "Checking online version app..." DarkCyan
+call :msg "Checking online version app..." Magenta
 
 :: Request online version
 for /f "delims=" %%i in ('powershell -command "try { (Invoke-WebRequest -Uri %URL% -UseBasicParsing).Content } catch { exit 1 }"') do (
@@ -30,7 +30,7 @@ if "%DEPOT_VERSION%"=="" (
     call :msgBg "Errors checking online version" Red
     echo.
     call :msg "Please refer to: %URL_DEPOT%" Blue
-    timeout /t 1 >nul
+    @REM timeout /t 1 >nul
     goto endCheckingVersion
 )
 
@@ -40,8 +40,8 @@ if %DEPOT_VERSION% equ %CURRENT_VERSION% (
     timeout /t 1 >nul
     cls
 ) else (
-    call :msg "Your version             : %CURRENT_VERSION%" Cyan
     call :msg "New version available    : %DEPOT_VERSION%" Cyan
+    call :msg "Your version             : %CURRENT_VERSION%" Cyan
     echo.
     call :msg "Please refer to: %URL_DEPOT%" Blue
     echo.
@@ -64,36 +64,45 @@ echo.
 
 :loop
 set /p choix="Choice: "
-:: Get currrent time
-set currentTime=%time:~0,5%
+:: Get currrent time 
+call :getTime
 echo ------------------------------------------
 
 
 if "%choix%"=="1" (
     echo.
-    call :msg "Opening Power Options..." Green
+    call :msg "[%currentTime%] Opening Power Options..." Green
     echo.
     control.exe /name Microsoft.PowerOptions
     goto loop
 ) else if "%choix%"=="2" (
     echo.
-    call :msg "Opening Advanced Settings..." Green
+    call :msg "[%currentTime%] Opening Advanced Settings..." Green
     echo.
     control.exe powercfg.cpl,,1
     goto loop
 ) else if "%choix%"=="3" (
     echo.
-    call :msgBg "Exit..." DarkCyan
+    call :msg "Exit..." DarkCyan
     echo.
     timeout /t 2 >nul
     exit
 ) else (
-    call :msgBg "Invalid Choice. Enter : [1, 2 or 3]" Red
+    call :msgBg "[%currentTime%] Invalid Choice. Enter : [1, 2 or 3]" Red
     echo.
     goto loop
 )
 
 
+
+:: ###################### FUNCTIONS ######################
+
+
+:: Get current time
+:getTime
+    set currentTime=%time:~0,5%
+    @REM set currentTime=%time%
+goto :eof
 
 :: Display message color
 :: [Black, DarkBlue, DarkGreen, DarkCyan, DarkRed, DarkMagenta, DarkYellow,
