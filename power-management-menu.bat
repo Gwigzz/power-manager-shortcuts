@@ -3,7 +3,7 @@
 :: Encoding UTF-8
 chcp 65001 >nul
 
-set CURRENT_VERSION=0.3
+set CURRENT_VERSION=0.5
 
 title Power Management Menu
 
