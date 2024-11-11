@@ -3,15 +3,47 @@
 :: Encoding UTF-8
 chcp 65001 >nul
 
-set versionApp=0.2
+set CURRENT_VERSION=0.2
 
 title Power Management Menu
+
+:: ________________ Check Update _______________
+:: URL depot version
+set "URL=https://raw.githubusercontent.com/Gwigzz/power-manager-shortcuts/main/version.txt"
+
+set "DEPOT_VERSION="
+
+echo Checking online version app...
+
+for /f "delims=" %%i in ('powershell -command "try { (Invoke-WebRequest -Uri %URL% -UseBasicParsing).Content } catch { exit 1 }"') do (
+    set DEPOT_VERSION=%%i
+)
+timeout /t 1 >nul
+cls
+
+:: Check request
+if "%DEPOT_VERSION%"=="" (
+    echo Error to get online version: Please check your connection...
+)
+
+:: Comparing version
+if %DEPOT_VERSION% equ %CURRENT_VERSION% (
+    echo Checking version ok...
+    timeout /t 1 >nul
+    cls
+) else (
+    echo New version available! [%DEPOT_VERSION%]
+    echo.
+    echo Please refer to: https://github.com/Gwigzz/power-manager-shortcuts/blob/main/power-management-menu.bat
+    echo.
+)
+:: _____________________________________________
 
 echo.
 echo                                    ============================================
 echo                                                Power Management Menu
 echo                                    ============================================
-echo                                                     Version %versionApp%
+echo                                                     Version %CURRENT_VERSION%
 echo.
 echo        [1] Power Options
 echo        [2] Advanced Settings
