@@ -3,7 +3,7 @@
 :: Encoding UTF-8
 chcp 65001 >nul
 
-set CURRENT_VERSION=0.6
+set CURRENT_VERSION=0.7
 
 title Power Management Menu
 
@@ -16,13 +16,16 @@ set "URL_DEPOT=https://github.com/Gwigzz/power-manager-shortcuts/blob/main/power
 
 set "DEPOT_VERSION="
 
-call :msg "Checking online version app..." Magenta
+echo.
+echo.
+echo.
+call :msg "       Checking online version app..." Magenta
 
 :: Request online version
 for /f "delims=" %%i in ('powershell -command "try { (Invoke-WebRequest -Uri %URL% -UseBasicParsing).Content } catch { exit 1 }"') do (
     set DEPOT_VERSION=%%i
 )
-timeout /t 1 >nul
+@REM timeout /t 1 >nul
 cls
 
 :: Check request
@@ -36,7 +39,10 @@ if "%DEPOT_VERSION%"=="" (
 
 :: Comparing version
 if %DEPOT_VERSION% equ %CURRENT_VERSION% (
-    call :msg "Checking version success." Green
+    echo.
+    echo.
+    echo.
+    call :msg "       Checking version success." Green
     timeout /t 1 >nul
     cls
 ) else (
